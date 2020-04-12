@@ -1,42 +1,11 @@
-import React, { Component } from 'react'
-import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native'
-import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { Dimensions, Platform, PixelRatio } from 'react-native';
+import React from 'react';
+import AppStack from './Components/index.js';
 
-const {
-  width: SCREEN_WIDTH,
-  height: SCREEN_HEIGHT,
-} = Dimensions.get('window');
+const App = () => {
+  return (
+    <AppStack />
+  );
+};
 
-// based on iphone 5s's scale
-const scale = SCREEN_WIDTH / 320;
 
-export function normalize(size) {
-  const newSize = size * scale 
-  if (Platform.OS === 'ios') {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize))
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2
-  }
-}
-
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-
-      </View>
-    )
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      flexDirection: 'column',
-      paddingBottom: hp('6.3%'),
-      paddingTop: hp('32.8%')
-  }
-})
+export default App;
