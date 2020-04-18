@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Dimensions, Platform, PixelRatio } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
+import { PieChart } from 'react-native-chart-kit';
 
 const {
   width: SCREEN_WIDTH,
@@ -21,14 +21,92 @@ export function normalize(size) {
   }
 }
 
-export default class App extends Component {
+export default class GraphScreen extends Component {
+  constructor(props){
+    super(props);
+    this.state={myJson: 0};
+  }
+  
+  componentDidMount() {
+    const that = this;
+    fetch('http://13.209.70.41:5000/data')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(myJson) {
+      that.setState({
+        myJson: myJson
+      });
+      console.log(JSON.stringify(myJson));
+    });
+  }
+
+  
   render() {
+    const screenWidth = Dimensions.get("window").width;
+    const chartConfig = {
+      backgroundGradientFrom: "#1E2923",
+      backgroundGradientFromOpacity: 0,
+      backgroundGradientTo: "#08130D",
+      backgroundGradientToOpacity: 0.5,
+      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+      strokeWidth: 2, // optional, default 3
+      barPercentage: 0.5
+    };
+    
+    const data = [
+      {
+        name: "조용함",
+        population: 5,
+        color: "rgba(131, 167, 234, 1)",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15
+      },
+      {
+        name: "조금 조용함",
+        population: 15,
+        color: "#F00",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15
+      },
+      {
+        name: "보통",
+        population: 40,
+        color: "red",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15
+      },
+      {
+        name: "조금 시끄러움",
+        population: 40,
+        color: "#ffffff",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15
+      },
+      {
+        name: "시끄러움",
+        population: 0,
+        color: "rgb(0, 0, 255)",
+        legendFontColor: "#7F7F7F",
+        legendFontSize: 15
+      }
+    ];
     return (
         <View style={{flex: 1}}>
             <View style={styles.header}>
                 <Text style={styles.headerText}> 4월 16일 통계 </Text>
-
             </View>
+            <PieChart
+              data={data}
+              width={screenWidth}
+              height={220}
+              chartConfig={chartConfig}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
+              absolute
+            />
+            
             
         </View>
     )
