@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native'
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { Dimensions, Platform, PixelRatio } from 'react-native';
 import { PieChart } from 'react-native-chart-kit';
+import Axios from 'axios';
 
 const {
   width: SCREEN_WIDTH,
@@ -28,17 +29,32 @@ export default class GraphScreen extends Component {
   }
   
   componentDidMount() {
-    const that = this;
-    fetch('http://13.209.70.41:5000/data')
-    .then(function(response) {
-      return response.json();
+
+    let url = 'http://13.209.70.41:5000/data';
+
+    Axios.get(url)
+    .then(function (response) {
+      console.log(response);
     })
-    .then(function(myJson) {
-      that.setState({
-        myJson: myJson
-      });
-      console.log(JSON.stringify(myJson));
+    .catch(function (error) {
+      console.log(error);
     });
+    
+
+    // const that = this;
+    // fetch('http://13.209.70.41:5000/data')
+    // .then(function(response) {
+    //   return response.json();
+    // })
+    // .then(function(myJson) {
+    //   that.setState({
+    //     myJson: myJson
+    //   });
+    //   console.log(JSON.stringify(myJson));
+    // })
+    // .catch(error => {
+    //   console.error(error);
+    // }) ; 
   }
 
   
