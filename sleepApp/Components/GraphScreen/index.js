@@ -25,36 +25,36 @@ export function normalize(size) {
 export default class GraphScreen extends Component {
   constructor(props){
     super(props);
-    this.state={myJson: 0};
+    this.state={myJson: ''};
   }
   
   componentDidMount() {
 
     let url = 'http://13.209.70.41:5000/data';
 
-    Axios.get(url)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    // Axios.get(url)
+    // .then(function (response) {
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
     
 
-    // const that = this;
-    // fetch('http://13.209.70.41:5000/data')
-    // .then(function(response) {
-    //   return response.json();
-    // })
-    // .then(function(myJson) {
-    //   that.setState({
-    //     myJson: myJson
-    //   });
-    //   console.log(JSON.stringify(myJson));
-    // })
-    // .catch(error => {
-    //   console.error(error);
-    // }) ; 
+    const that = this;
+    fetch('http://13.209.70.41:5000/data')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(ma) {
+      that.setState({
+        myJson: ma
+      });
+      console.log(JSON.stringify(ma));
+    })
+    .catch(error => {
+      console.error(error);
+    }) ; 
   }
 
   
